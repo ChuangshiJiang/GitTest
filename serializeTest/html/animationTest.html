@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #test{
+            width: 0px;
+            height: 17px;
+            background-color: #e867cc;
+            color:#fff;
+            line-height: 17px;
+        }
+    </style>
+
+
+</head>
+<body>
+    <div id="test">0%</div>
+    <input type="button" value="Run" id="run"/>
+
+    <script>
+        window.requestAnimationFrame = window.requestAnimationFrame || window.requestAnimationFrame || window.requestAnimationFrame || window.requestAnimationFrame;
+        var start = null;
+        var ele = document.getElementById("test");
+        var progress = 0;
+
+        function step(){
+            if(progress<100){
+                progress += 1;
+                ele.style.width = progress + "%";
+                ele.innerHTML = progress + "%";
+                requestAnimationFrame(step);
+            }
+        };
+        requestAnimationFrame(step);
+        document.getElementById("run").addEventListener("click",function(){
+            ele.style.width = 1 + "px";
+            progress = 0;
+            requestAnimationFrame(step);
+        },false);
+
+        if('requestIdleCallback' in window){
+            alert("Use it to schedule your job ");
+        }else{
+            alert("Do what you want do today");
+        }
+    </script>
+</body>
+</html>

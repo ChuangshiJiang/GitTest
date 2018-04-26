@@ -1,0 +1,24 @@
+.prop{
+    width:19.6%;
+    float: left;
+    color:#333;
+    border: 1px solid;
+    margin: 2px;
+    cursor:pointer;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.num{
+    padding:0 2px;
+    color:#e867cc;
+}
+
+.active{
+    background-color: antiquewhite;
+}
+
+::-webkit-scrollbar{
+    display: none;
+}
