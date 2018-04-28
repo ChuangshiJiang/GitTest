@@ -1,0 +1,25 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <input type="file" id="files-list"/>
+    <script src="../js/EventUtil.js"></script>
+    <script>
+        EventUtil.addHandler(window,'load',function(){
+            var filesList = document.querySelector("#files-list");
+            EventUtil.addHandler(filesList,'change',function(event){
+                var files = EventUtil.getTarget(event).files,i=0,len = files.length;
+                while(i<len){
+                    console.log(files[i].name +'('+files[i].type+','+files[i].size+'bytes)');
+                    i++;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
