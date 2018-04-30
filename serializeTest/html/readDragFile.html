@@ -48,6 +48,16 @@
         EventUtil.addHandler(dropTarget, "dragover", handleEvent);
         EventUtil.addHandler(dropTarget, "drop", handleEvent);
 
+        EventUtil.addHandler(window, 'load', function () {
+            var value1 = 5,value2 = 10;
+            console.log('value1:'+value1+',value2:'+value2);
+            [value2,value1] = [value1,value2];
+            console.log('value1:'+value1+',value2:'+value2);
+            
+        });
+
+
+
     </script>
 </body>
 
