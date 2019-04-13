@@ -13,6 +13,19 @@
     <a href="javascript:window.open('about:blank')">
         open a new window
     </a>
+    <input type="file" placeholder="选择上传文件">
+    <iframe src="www.baidu.com">
+
+    </iframe>
+
     <script src="./test.js"></script>
+    <script>
+        window.onload = ()=>{
+            window.postMessage('雷猴啊！');
+            window.onmessage((data)=>{
+                console.log('收到消息：',data);
+            });
+        }
+    </script>
 </body>
 </html>
