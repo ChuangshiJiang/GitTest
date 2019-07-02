@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+
+</head>
+
+<body>
+  <script>
+    //使用script元素发送jsonp请求
+    //根据指定的URL发送一个JSONP请求
+    //然后把解析得到的响应数据传递给回调函数
+    //在URL中添加一个名为jsonp的查询参数，用于指定该请求的回调函数的名称
+
+    function getJSONP(url, callback) {
+      debugger;
+      // 为本次请求创建一个唯一的回调函数名称
+      let cbnum = 'cb' + getJSONP.counter++;
+      let cbname = 'getJSONP.' + cbnum;
+      //将回调函数的名称以表单编码的形式添加到url的查询部分
+      //使用jsonp作为参数名，一些支持jsonp的服务
+      //可能使用其他的参数名，比如callback
+      if (url.indexOf('?') === -1) {
+        //url没有查询部分
+        url += '?jsonp=' + cbname;//作为查询部分添加参数
+      } else {
+        url += '&jsonp=' + cbname;
+      }
+
+      //创建script意元素用于发送请求
+      let script = document.createElement('script');
+
+      //定义脚本将要执行的回调函数
+      getJSONP[cbnum] = (response) => {
+        try {
+          callback(response);
+        } finally {
+          //即使回调函数抛出响应错误
+          delete getJSONP[cbnum];//删除该函数
+          script.parentNode.removeChild(script);//移除script元素
+        }
+      }
+
+      //立即触发http请求
+      script.src = url;//设置脚本的url
+      document.body.append(script);//把它添加到文档中
+    }
+
+    getJSONP.counter = 0;//用于创建唯一回调函数名称的计数器
+
+    getJSONP('https://www.baidu.com', (response) => {
+      console.log(response);
+    });
+  </script>
+</body>
+
+</html>
