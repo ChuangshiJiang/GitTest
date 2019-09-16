@@ -1,0 +1,92 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>页面无任何操作30秒后退出</title>
+  <script language="JavaScript">
+
+
+    var timerIdle = 0;   //空闲时间
+    var timerBusy = 0;   //倒计时开始
+    var timerIdle1 = 5;  //系统参数定义超时时间
+    var timerBusy1 = 30; //退出时间
+
+
+    function timerTimeout() {
+      timerIdle++;
+      if (timerIdle > timerIdle1) {
+        if (timerBusy == 0) {
+          timerBusy = timerBusy1 + 1;
+          //view timerUI
+          document.getElementById("timerUI").style.display = "inline";
+        }
+        timerBusy--;
+        //view timerBusy
+        document.getElementById("_timerBusy").innerHTML = timerBusy;
+        if (timerBusy <= 0) {
+          timerExit();
+          return;
+        }
+      } else {
+        timerBusy = 0;
+      }
+      window.setTimeout("timerTimeout()", 1000);
+    }
+
+    function timerUser() {
+      //让div消失
+      timerIdle = 0;
+      document.getElementById("timerUI").style.display = "none";
+    }
+
+    function timerExit() {
+      //超时处理.这里可以写自己需要执行的方法...
+      document.getElementById("_timerBusy").innerHTML = "Timeout";
+    }
+    window.setTimeout("timerTimeout()", 1000);
+    function mouseMove(ev) {
+      ev = ev || window.event;
+      timerUser();
+      var mousePos = mouseCoords(ev);
+    }
+
+
+    function mouseCoords(ev) {
+      if (ev.pageX || ev.pageY) {
+        return { x: ev.pageX, y: ev.pageY };
+      }
+      return {
+        x: ev.clientX + document.body.scrollLeft - document.body.clientLeft,
+        y: ev.clientY + document.body.scrollTop - document.body.clientTop
+      };
+    }
+
+    document.onmousemove = mouseMove;
+    document.onkeydown = mouseMove;
+
+  </script>
+</head>
+
+<body>
+  <div id="timerUI" style="position:absolute; left:30px; top:30px; font-size:20px;">
+    <table width="300" border="0" cellspacing="0" cellpadding="0">
+      <tbody>
+        <tr>
+          <td nowrap="" align="right" id="_timerBusy" style=" font-size:36px; font-weight:bold; color:#FF0000;"></td>
+          <td nowrap="" align="left">&nbsp;秒后将退出系统</td>
+        </tr>
+        <tr>
+          <td nowrap="" align="right"></td>
+          <td nowrap="" align="right"></td>
+          <td nowrap="" align="left">&nbsp;如继续操作点任意键即可</td>
+        </tr>
+        <tr>
+          <td nowrap="" align="right"></td>
+          <td nowrap="" align="right"></td>
+          <td nowrap="" align="left">&nbsp;(系统检测到您长时间未进行任何操作,为保护您的信息安全将自动退出)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
